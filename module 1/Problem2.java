@@ -1,55 +1,37 @@
-class ReverseList {
 
-    static class Node {
-        int data;
-        Node next;
-        Node(int data) { this.data = data; }
-    }
+import java.util.Arrays;
 
-    static Node head;
 
-    static void insertAtEnd(int value) {
-        Node newNode = new Node(value);
-        if (head == null) { head = newNode; return; }
-        Node temp = head;
-        while (temp.next != null) temp = temp.next;
-        temp.next = newNode;
-    }
+/**
+ * Problem 2: Reverse an Array In-Place.
+ * 
+ * Objective:
+ * Reverse the order of elements in an array without allocating a second array,
+ * using the two-pointer technique.
+ * 
+ * Complexity:
+ * - Time: O(n) — approximately n/2 swaps are performed.
+ * - Space: O(1) — only one temporary swap variable is used.
+ */
+public class Problem2 {
 
-    static void reverse() {
-        Node prev = null;
-        Node curr = head;
-        while (curr != null) {
-            Node next = curr.next;  // save next node
-            curr.next = prev;       // reverse the pointer
-            prev = curr;            // move prev forward
-            curr = next;            // move curr forward
+
+    static void reverse(int[] arr) {
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
         }
-        head = prev;                // prev is the new head
-    }
-
-    static void print() {
-        Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data);
-            if (temp.next != null) System.out.print(" -> ");
-            temp = temp.next;
-        }
-        System.out.println(" -> NULL");
     }
 
     public static void main(String[] args) {
-        insertAtEnd(10);
-        insertAtEnd(20);
-        insertAtEnd(30);
-        insertAtEnd(40);
+        int[] arr = { 10, 20, 30, 40, 50 };
 
-        System.out.print("Before: ");
-        print();
-
-        reverse();
-
-        System.out.print("After:  ");
-        print();
+        System.out.println("Before: " + Arrays.toString(arr));
+        reverse(arr);
+        System.out.println("After:  " + Arrays.toString(arr));
     }
 }

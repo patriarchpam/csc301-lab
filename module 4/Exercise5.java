@@ -1,3 +1,4 @@
+
 // Import Java's double-ended queue collections
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -7,17 +8,20 @@ import java.util.Arrays;
  * Exercise 5: Sliding Window Minimum Using a Monotonic Deque.
  * 
  * Objective:
- * Adapt the sliding window maximum algorithm to compute the sliding window MINIMUM
+ * Adapt the sliding window maximum algorithm to compute the sliding window
+ * MINIMUM
  * by reversing the comparison direction in the deque removal condition:
  * Change: arr[deque.peekLast()] <= arr[i]
- * To:     arr[deque.peekLast()] >= arr[i]
+ * To: arr[deque.peekLast()] >= arr[i]
  * 
  * Theory / Mechanism:
  * - For a sliding window MINIMUM, the deque maintains candidate indices in
- *   monotonically INCREASING order of array values.
- * - Any index at the back of the deque whose value is GREATER than or EQUAL to arr[i]
- *   can never be the window minimum as long as arr[i] is in the window.
- * - The FRONT of the deque always holds the index of the minimum element in the window.
+ * monotonically INCREASING order of array values.
+ * - Any index at the back of the deque whose value is GREATER than or EQUAL to
+ * arr[i]
+ * can never be the window minimum as long as arr[i] is in the window.
+ * - The FRONT of the deque always holds the index of the minimum element in the
+ * window.
  * 
  * Test Configuration:
  * Array: [1, 3, -1, -3, 5, 3, 6, 7], Window size k = 3
@@ -28,21 +32,23 @@ public class Exercise5 {
     // Computes the minimum of each sliding window of size k
     static int[] minSlidingWindow(int[] arr, int k) {
         int n = arr.length;
-        if (n == 0 || k <= 0) return new int[0];
+        if (n == 0 || k <= 0)
+            return new int[0];
 
         int[] result = new int[n - k + 1];
         // Monotonic deque storing indices in INCREASING order of arr values
         Deque<Integer> deque = new ArrayDeque<>();
 
         System.out.println("Step-by-step Deque Trace for Sliding Window Minimum:");
-        System.out.printf("%-6s | %-8s | %-20s | %-20s | %-10s%n", 
-                          "Index", "Element", "Deque Before Insert", "Deque After Insert", "Window Min");
+        System.out.printf("%-6s | %-8s | %-20s | %-20s | %-10s%n",
+                "Index", "Element", "Deque Before Insert", "Deque After Insert", "Window Min");
         System.out.println("-----------------------------------------------------------------------------");
 
         for (int i = 0; i < n; i++) {
             String dequeBefore = deque.toString();
 
-            // KEY ADAPTATION: Remove indices whose values are GREATER than or EQUAL to arr[i]
+            // KEY ADAPTATION: Remove indices whose values are GREATER than or EQUAL to
+            // arr[i]
             // In Problem 5 (maximum), the condition was: arr[deque.peekLast()] <= arr[i]
             while (!deque.isEmpty() && arr[deque.peekLast()] >= arr[i]) {
                 deque.pollLast();
@@ -64,8 +70,8 @@ public class Exercise5 {
                 minStr = String.valueOf(minVal);
             }
 
-            System.out.printf("%-6d | %-8d | %-20s | %-20s | %-10s%n", 
-                              i, arr[i], dequeBefore, deque.toString(), minStr);
+            System.out.printf("%-6d | %-8d | %-20s | %-20s | %-10s%n",
+                    i, arr[i], dequeBefore, deque.toString(), minStr);
         }
 
         return result;
@@ -76,7 +82,7 @@ public class Exercise5 {
         System.out.println(" Exercise 5: Sliding Window Minimum Using a Monotonic Deque                ");
         System.out.println("==========================================================================");
 
-        int[] arr = {1, 3, -1, -3, 5, 3, 6, 7};
+        int[] arr = { 1, 3, -1, -3, 5, 3, 6, 7 };
         int k = 3;
 
         System.out.println("Input Array: " + Arrays.toString(arr));
@@ -89,7 +95,7 @@ public class Exercise5 {
         System.out.println("Expected Window Minimums: [-1, -3, -3, -3, 3, 3]");
 
         // Verification check
-        int[] expected = {-1, -3, -3, -3, 3, 3};
+        int[] expected = { -1, -3, -3, -3, 3, 3 };
         boolean matches = Arrays.equals(minResult, expected);
         System.out.println("Matches Expected Output? " + (matches ? "YES (PASSED)" : "NO (FAILED)"));
 
